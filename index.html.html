@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>💖 Cosita Love Message 💖</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #ffe6f0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: #d6336c;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+  h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    max-width: 80%;
+    min-height: 2.5em;
+    word-break: break-word;
+    white-space: pre-wrap;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 10px;
+    background-color: #ff4da6;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  button:hover:enabled { background-color: #e60073; }
+  button:disabled { background-color: #ff99c2; cursor: not-allowed; }
+  .heart {
+    position: fixed;
+    pointer-events: none;
+    color: #ff4da6;
+    font-size: 20px;
+    opacity: 0.8;
+    transition: transform 3s linear, opacity 3s linear;
+  }
+</style>
+</head>
+<body>
+
+<h1 id="message"> </h1>
+<button id="loveButton" onclick="showLove()">💌 Show Love 💌</button>
+
+<script>
+const messages = [
+  "I love you ❤️",
+  "Every day with you is a gift 😍",
+  "My love for you = Infinity 💖",
+  "I can’t imagine life without you 💘",
+  "You are my everything 💗",
+  "I’m so lucky to have you 💞",
+  "Life is better with you by my side 💓",
+  "I fall for you more every day 💘",
+  "You are my favorite person 💕",
+  "I love every little thing about you 😍",
+  "You light up my life 🌟",
+  "I cherish every moment with you 💞",
+  "I love you more than words can say ❤️",
+  "Fosforito show me your tits xd💞"
+];
+
+function typeMessage(text, element, callback) {
+  element.textContent = '';
+  let i = 0;
+  function type() {
+    if (i < text.length) {
+      element.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, 40);
+    } else if (callback) {
+      callback();
+    }
+  }
+  type();
+}
+
+function createHeart() {
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  heart.textContent = '❤️';
+  
+  // Posición inicial
+  heart.style.left = Math.random() * 90 + 'vw';
+  heart.style.top = '100vh';
+  heart.style.fontSize = (10 + Math.random() * 30) + 'px';
+  const scale = 0.5 + Math.random() * 1.5;
+  heart.style.transform = `scale(${scale}) rotate(0deg)`;
+  
+  document.body.appendChild(heart);
+
+  // Animación aleatoria
+  const rotate = (Math.random() * 360) - 180; // giro random
+  setTimeout(() => {
+    heart.style.transform = `translateY(-120vh) scale(${scale}) rotate(${rotate}deg)`;
+    heart.style.opacity = '0';
+  }, 50);
+
+  setTimeout(() => heart.remove(), 3000);
+}
+
+function showLove() {
+  const button = document.getElementById('loveButton');
+  button.disabled = true;
+
+  const message = messages[Math.floor(Math.random() * messages.length)];
+  const messageElement = document.getElementById('message');
+  typeMessage(message, messageElement, () => { button.disabled = false; });
+
+  // Crear 8 corazones con delays distintos
+  for (let i = 0; i < 8; i++) {
+    setTimeout(createHeart, i * 200);
+  }
+}
+</script>
+
+</body>
+</html>
